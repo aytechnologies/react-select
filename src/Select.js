@@ -802,22 +802,39 @@ const Select = React.createClass({
 		}
 		let onClick = this.props.onValueClick ? this.handleValueClick : null;
 		if (this.props.multi) {
-			return valueArray.map((value, i) => {
+			if (valueArray.length > 1){
 				return (
 					<ValueComponent
-						id={this._instancePrefix + '-value-' + i}
+						id={this._instancePrefix + '-value-1' }
 						instancePrefix={this._instancePrefix}
 						disabled={this.props.disabled || value.clearableValue === false}
-						key={`value-${i}-${value[this.props.valueKey]}`}
+						key={`value-1-${value[this.props.valueKey]}`}
 						onClick={onClick}
 						onRemove={this.removeValue}
-						value={value}
+						value={valueArray.length + ' Filters'}
 					>
-						{renderLabel(value, i)}
+						{renderLabel(value)}
 						<span className="Select-aria-only">&nbsp;</span>
 					</ValueComponent>
 				);
-			});
+			}else{
+				return valueArray.map((value, i) => {
+					return (
+						<ValueComponent
+							id={this._instancePrefix + '-value-' + i}
+							instancePrefix={this._instancePrefix}
+							disabled={this.props.disabled || value.clearableValue === false}
+							key={`value-${i}-${value[this.props.valueKey]}`}
+							onClick={onClick}
+							onRemove={this.removeValue}
+							value={value}
+						>
+							{renderLabel(value, i)}
+							<span className="Select-aria-only">&nbsp;</span>
+						</ValueComponent>
+					);
+				});
+			}
 		} else if (!this.state.inputValue) {
 			if (isOpen) onClick = null;
 			return (

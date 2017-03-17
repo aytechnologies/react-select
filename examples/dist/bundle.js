@@ -830,7 +830,7 @@ var Value = _react2['default'].createClass({
 				onTouchEnd: this.handleTouchEndRemove,
 				onTouchStart: this.handleTouchStart,
 				onTouchMove: this.handleTouchMove },
-			'XX'
+			'×'
 		);
 	},
 
@@ -1923,26 +1923,47 @@ var Select = _react2['default'].createClass({
 		}
 		var onClick = this.props.onValueClick ? this.handleValueClick : null;
 		if (this.props.multi) {
-			return valueArray.map(function (value, i) {
+			if (valueArray.length > 1) {
 				return _react2['default'].createElement(
 					ValueComponent,
 					{
-						id: _this4._instancePrefix + '-value-' + i,
-						instancePrefix: _this4._instancePrefix,
-						disabled: _this4.props.disabled || value.clearableValue === false,
-						key: 'value-' + i + '-' + value[_this4.props.valueKey],
+						id: this._instancePrefix + '-value-1',
+						instancePrefix: this._instancePrefix,
+						disabled: this.props.disabled || value.clearableValue === false,
+						key: 'value-1-' + value[this.props.valueKey],
 						onClick: onClick,
-						onRemove: _this4.removeValue,
-						value: value
+						onRemove: this.removeValue,
+						value: valueArray.length + ' Filters'
 					},
-					renderLabel(value, i),
+					renderLabel(value),
 					_react2['default'].createElement(
 						'span',
 						{ className: 'Select-aria-only' },
 						' '
 					)
 				);
-			});
+			} else {
+				return valueArray.map(function (value, i) {
+					return _react2['default'].createElement(
+						ValueComponent,
+						{
+							id: _this4._instancePrefix + '-value-' + i,
+							instancePrefix: _this4._instancePrefix,
+							disabled: _this4.props.disabled || value.clearableValue === false,
+							key: 'value-' + i + '-' + value[_this4.props.valueKey],
+							onClick: onClick,
+							onRemove: _this4.removeValue,
+							value: value
+						},
+						renderLabel(value, i),
+						_react2['default'].createElement(
+							'span',
+							{ className: 'Select-aria-only' },
+							' '
+						)
+					);
+				});
+			}
 		} else if (!this.state.inputValue) {
 			if (isOpen) onClick = null;
 			return _react2['default'].createElement(
@@ -2118,7 +2139,7 @@ var Select = _react2['default'].createClass({
 
 		if (!this.props.name) return;
 		if (this.props.joinValues) {
-			var value = valueArray.map(function (i) {
+			var _value = valueArray.map(function (i) {
 				return stringifyValue(i[_this6.props.valueKey]);
 			}).join(this.props.delimiter);
 			return _react2['default'].createElement('input', {
@@ -2127,7 +2148,7 @@ var Select = _react2['default'].createClass({
 					return _this6.value = ref;
 				},
 				name: this.props.name,
-				value: value,
+				value: _value,
 				disabled: this.props.disabled });
 		}
 		return valueArray.map(function (item, index) {

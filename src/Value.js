@@ -62,7 +62,7 @@ const Value = React.createClass({
 				onTouchEnd={this.handleTouchEndRemove}
 				onTouchStart={this.handleTouchStart}
 				onTouchMove={this.handleTouchMove}>
-				XX
+				&times;
 			</span>
 		);
 	},
